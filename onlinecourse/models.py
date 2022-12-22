@@ -115,6 +115,11 @@ class Enrollment(models.Model):
     #    else:
     #        return False
 
+#question model
+class Question(models.Model):
+    question_text = models.CharField(null=False, max_length=200,)
+    questions = models.ForeignKey(Course, on_delete=models.CASCADE)
+
 
 #  <HINT> Create a Choice Model with:
     # Used to persist choice content for a question
@@ -124,6 +129,12 @@ class Enrollment(models.Model):
     # Other fields and methods you would like to design
 # class Choice(models.Model):
 
+#choice model
+class Choice(models.Model):
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    is_correct = models.BooleanField(default=False)
+
 # <HINT> The submission model
 # One enrollment could have multiple submission
 # One submission could have multiple choices
@@ -132,3 +143,8 @@ class Enrollment(models.Model):
 #    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
 #    choices = models.ManyToManyField(Choice)
 #    Other fields and methods you would like to design
+
+#Submission model
+class Submission(models.Model):
+    enrollement_id = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
+    choice_id = models.ForeignKey(Choice , on_delete=models.CASCADE)
